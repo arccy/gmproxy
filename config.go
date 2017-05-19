@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// Valid query params, 2017/05
 const (
 	FilterApi_key        = "api_key"
 	FilterGet            = "get"
@@ -24,10 +25,12 @@ const (
 	FilterNotCountry     = "notCountry"
 )
 
+// Key-Value pairs of request params
 type RequestConfig struct {
 	v url.Values
 }
 
+// Type switch and insert into RequestConfig
 func (r *RequestConfig) Add(param string, val interface{}) error {
 	switch val.(type) {
 	default:
@@ -48,6 +51,7 @@ func (r *RequestConfig) Add(param string, val interface{}) error {
 	return nil
 }
 
+// converts url.Values to query string
 func (r *RequestConfig) ToUrl() string {
 	return r.v.Encode()
 }

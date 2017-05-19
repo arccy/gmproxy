@@ -2,24 +2,13 @@ package gmproxy
 
 import "encoding/json"
 
-type commonProxy struct {
-	Protocol
-	IpPort    string
-	TsChecked int
-	Curl      string
-	Type      string
-}
-
-type protoProxy struct {
-	commonProxy
-	OtherProtocols *json.RawMessage
-}
-
+// A proxy from the Api
 type Proxy struct {
 	commonProxy
 	OtherProtocols []Protocol
 }
 
+// Attributes common to the primary proxy and other Protocols
 type Protocol struct {
 	Get            bool
 	Post           bool
@@ -33,4 +22,19 @@ type Protocol struct {
 	Port           string
 	Country        string
 	Websites       map[string]bool
+}
+
+// Split out because DRY between protoProxy and Proxy
+type commonProxy struct {
+	Protocol
+	IpPort    string
+	TsChecked int
+	Curl      string
+	Type      string
+}
+
+// necessary because OtherProtocols could a single item or a list
+type protoProxy struct {
+	commonProxy
+	OtherProtocols *json.RawMessage
 }
